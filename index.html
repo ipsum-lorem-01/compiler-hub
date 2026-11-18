@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>(function(){var t=null;try{t=localStorage.getItem("hub-theme");}catch(e){}document.documentElement.setAttribute("data-theme",t==="dark"?"dark":"light");})();</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f6f4ef">
+<title>Compiler Hub — by Hussain S I</title>
+<meta name="description" content="Every automation playground developed by Hussain S I in one place: Playwright, Postman, REST Assured, SQL, JMeter, DeepEval, Git and CI/CD, plus the automation training site.">
+<meta name="author" content="Hussain S I">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Compiler Hub — by Hussain S I">
+<meta property="og:description" content="Eight browser-based automation playgrounds and the training site behind them, designed and developed by Hussain S I.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%230d141f'/%3E%3Cstop offset='1' stop-color='%231c7ed6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-family='Arial,sans-serif' font-size='25' font-weight='700' fill='%23f9fbff'%3EHS%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Calibri where it is installed (Windows, Office); Carlito, its metric twin, everywhere else -->
+<link href="https://fonts.googleapis.com/css2?family=Carlito:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   Compiler Hub — the front door to every playground.
+   One typeface (Calibri), two weights (regular and bold), and
+   one small type scale used everywhere:
+     11px labels · 12.5px meta · 14px body · 15px lead
+     17px card titles · 24px section titles · 42px page title
+   Light by default; Dark mode is one click and is remembered.
+   ============================================================ */
+:root{
+  color-scheme:light;
+  --ink:#0d141f; --ink-soft:#26323f; --muted:#56606e; --dim:#838d9b;
+  --paper:#f6f4ef; --panel:#ffffff; --panel2:#f2f4f7; --soft:#f8fafc;
+  --line:rgba(13,23,35,.10); --line-h:rgba(13,23,35,.22);
+  --accent:#1c7ed6; --accent-2:#12b886;
+  --bar:rgba(255,255,255,.88);
+  --shadow-soft:0 1px 2px rgba(13,23,35,.05),0 4px 14px rgba(13,23,35,.05);
+  --shadow:0 14px 32px -12px rgba(13,23,35,.22);
+  --ground:
+    radial-gradient(circle at 12% 0%, rgba(28,126,214,.12), transparent 55%),
+    radial-gradient(circle at 88% 4%, rgba(18,184,134,.10), transparent 50%),
+    linear-gradient(180deg,#f8f7f3 0%,#eef2f6 55%,#f6f0e9 100%);
+  /* one colour per playground */
+  --c-pw:#2b8a3e; --c-pm:#d6336c; --c-ra:#099268; --c-sql:#1971c2;
+  --c-jm:#e03131; --c-de:#9c6f00; --c-git:#e8590c; --c-ci:#0c8599;
+  --on-c:#ffffff;
+  /* the type scale */
+  --font:Calibri,Carlito,'Segoe UI',system-ui,-apple-system,Roboto,sans-serif;
+  --fs-xs:11px; --fs-sm:12.5px; --fs-base:14px; --fs-md:15px;
+  --fs-h3:17px; --fs-h2:24px; --fs-h1:clamp(30px,4.4vw,42px);
+  --r:12px; --r-sm:8px;
+}
+/* Dark mode, built the way the Playwright Playground builds it: the same
+   ink, paper, panel and line values, the same background glow, quiet grey
+   buttons, and solid blue (#62a5ff with navy text) only for what is active
+   or primary. The tool colours come from that page's soft code palette. */
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  /* the Playwright Playground's dark values, lifted a touch off pure black:
+     a dark navy page, panels a clear step lighter, thin white-alpha lines */
+  --ink:#e6edf5; --ink-soft:#cfd9e6; --muted:#a6b2c1; --dim:#7f8d9e;
+  --paper:#0e131a; --panel:#141c27; --panel2:#1c2533; --soft:#10171f;
+  --line:rgba(255,255,255,.10); --line-h:rgba(255,255,255,.22);
+  --accent:#62a5ff; --accent-2:#3ddc97; --on-accent:#0a1e38;
+  --btn-bg:rgba(255,255,255,.07); --btn-bg-h:rgba(255,255,255,.14);
+  --bar:rgba(14,19,26,.88);
+  --shadow-soft:0 8px 20px rgba(0,0,0,.42);
+  --shadow:0 18px 40px rgba(0,0,0,.52);
+  --ground:
+    radial-gradient(circle at 12% 0%, rgba(98,165,255,.17), transparent 55%),
+    radial-gradient(circle at 88% 4%, rgba(61,220,151,.11), transparent 50%),
+    linear-gradient(180deg,#0f151d 0%,#0d1219 45%,#11171f 100%);
+  --c-pw:#69db7c; --c-pm:#ff8fb1; --c-ra:#38d9a9; --c-sql:#82aaff;
+  --c-jm:#ff8787; --c-de:#ffcb6b; --c-git:#f78c6c; --c-ci:#89ddff;
+  --on-c:#0a1e38;
+}
+:root[data-theme="dark"] .top{box-shadow:0 6px 20px rgba(0,0,0,.4)}
+:root[data-theme="dark"] .btn{background:var(--btn-bg)}
+:root[data-theme="dark"] .btn:hover{background:var(--btn-bg-h);border-color:var(--line-h)}
+:root[data-theme="dark"] .seg button[aria-pressed=true]{background:var(--accent);color:var(--on-accent);box-shadow:none}
+/* cards are built like the Playwright panels: one thin border all round, a
+   rounder corner, and a darker strip along the bottom (its "Ready." bar).
+   The tool colour stays on the icon and its label. */
+:root[data-theme="dark"] .card{border:1px solid var(--line);border-radius:14px;padding-bottom:0;overflow:hidden}
+:root[data-theme="dark"] .card h3 a::after{border-radius:14px}
+:root[data-theme="dark"] .card:hover{border-color:color-mix(in srgb,var(--c) 45%,transparent)}
+:root[data-theme="dark"] .cfoot{margin:14px -18px 0;padding:9px 18px;background:var(--soft);border-top:1px solid var(--line)}
+:root[data-theme="dark"] .pathbox,:root[data-theme="dark"] .how li,:root[data-theme="dark"] .feature{border-radius:14px}
+:root[data-theme="dark"] .go{background:var(--btn-bg);color:var(--ink);border-color:var(--line)}
+:root[data-theme="dark"] .card:hover .go{background:var(--accent);color:var(--on-accent);border-color:transparent}
+:root[data-theme="dark"] .card:hover .icon{background:color-mix(in srgb,var(--c) 18%,var(--panel));color:var(--c);
+  border-color:color-mix(in srgb,var(--c) 40%,transparent)}
+:root[data-theme="dark"] .path a:hover .dot{background:color-mix(in srgb,var(--c) 22%,var(--panel));color:var(--c)}
+/* the training-site banner becomes a panel with a soft blue glow, not a bright block */
+:root[data-theme="dark"] .feature{background:
+    radial-gradient(circle at 100% 0%, rgba(98,165,255,.18), transparent 55%),
+    linear-gradient(135deg,#141c27 0%,#15213a 100%);
+  border:1px solid var(--line);box-shadow:var(--shadow-soft)}
+:root[data-theme="dark"] .feature::after{background:radial-gradient(circle,rgba(61,220,151,.12),transparent 65%)}
+:root[data-theme="dark"] .feature p{color:var(--muted)}
+:root[data-theme="dark"] .fhead,:root[data-theme="dark"] .feature .url,:root[data-theme="dark"] .feature .by{color:var(--dim)}
+:root[data-theme="dark"] .fhead{color:var(--accent)}
+:root[data-theme="dark"] .topics li{background:var(--panel2);border-color:var(--line);color:var(--ink-soft)}
+:root[data-theme="dark"] .topics .big{background:none;color:var(--muted)}
+:root[data-theme="dark"] .cta{background:var(--accent);color:var(--on-accent)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+body{margin:0;min-height:100vh;background:var(--paper);
+  color:var(--ink);font:400 var(--fs-base)/1.5 var(--font);-webkit-font-smoothing:antialiased}
+/* the glow is pinned to the screen, so it never ends in a seam while scrolling (phones included) */
+body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:var(--paper);background-image:var(--ground)}
+b,strong,h1,h2,h3{font-weight:700}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+.ico{fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.label{font-size:var(--fs-xs);font-weight:700;letter-spacing:.07em;text-transform:uppercase}
+
+/* ---------- the colour each tool tints with ---------- */
+[data-tool=playwright]{--c:var(--c-pw)} [data-tool=postman]{--c:var(--c-pm)} [data-tool=restassured]{--c:var(--c-ra)}
+[data-tool=sql]{--c:var(--c-sql)} [data-tool=jmeter]{--c:var(--c-jm)} [data-tool=deepeval]{--c:var(--c-de)}
+[data-tool=git]{--c:var(--c-git)} [data-tool=cicd]{--c:var(--c-ci)}
+
+/* ---------- the HS mark ---------- */
+.mark{flex:none;display:grid;place-items:center;width:34px;height:34px;border-radius:9px;
+  font:700 12px/1 var(--font);font-style:normal;color:#f9fbff;letter-spacing:.03em;
+  background:linear-gradient(135deg,#0d141f,#1c2f41 62%,var(--accent))}
+
+/* ---------- header ---------- */
+.top{position:sticky;top:0;z-index:20;background:var(--bar);backdrop-filter:blur(12px) saturate(160%);
+  -webkit-backdrop-filter:blur(12px) saturate(160%);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:14px;min-height:56px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;min-width:0}
+.brand b{display:block;font-size:var(--fs-md);line-height:1.2}
+.brand small{display:block;font-size:var(--fs-sm);color:var(--muted);white-space:nowrap}
+.topnav{display:flex;gap:2px;margin-left:auto}
+.topnav a{font-size:var(--fs-base);color:var(--muted);text-decoration:none;padding:6px 12px;border-radius:var(--r-sm)}
+.topnav a:hover{color:var(--ink);background:var(--panel2)}
+.btn{display:inline-flex;align-items:center;gap:7px;font-size:var(--fs-sm);font-weight:700;padding:7px 14px;
+  border-radius:var(--r-sm);background:var(--panel);border:1px solid var(--line);color:var(--ink);text-decoration:none;
+  transition:background .18s,border-color .18s}
+.btn:hover{border-color:var(--line-h);background:var(--panel2)}
+
+/* ---------- hero ---------- */
+.hero{padding-top:44px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;margin:0 0 12px;color:var(--accent)}
+.eyebrow::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--accent-2);
+  box-shadow:0 0 0 3px rgba(18,184,134,.18)}
+h1{margin:0;font-size:var(--fs-h1);line-height:1.1;letter-spacing:-.01em}
+h1 em{font-style:normal;color:var(--accent)}
+.lede{max-width:72ch;margin:12px 0 0;font-size:var(--fs-md);color:var(--muted)}
+.heroline{display:flex;align-items:center;flex-wrap:wrap;gap:12px 28px;margin-top:20px}
+.author{display:inline-flex;align-items:center;gap:9px;padding:5px 14px 5px 5px;border-radius:999px;
+  background:var(--panel);border:1px solid var(--line);font-size:var(--fs-sm);color:var(--muted)}
+.author .mark{width:26px;height:26px;border-radius:50%;font-size:10px}
+.author b{color:var(--ink)}
+.stats{display:flex;flex-wrap:wrap;gap:8px 24px;margin:0;padding:0;list-style:none}
+.stats li{display:flex;align-items:baseline;gap:6px;font-size:var(--fs-sm);color:var(--muted)}
+.stats b{font-size:20px;color:var(--ink)}
+
+/* the suggested path, as a line of steps */
+.pathbox{margin-top:26px;padding:14px 18px 12px;background:var(--panel);border:1px solid var(--line);
+  border-radius:var(--r);box-shadow:var(--shadow-soft)}
+.pathbox h2{margin:0 0 12px;color:var(--dim)}
+.path{position:relative;display:grid;grid-template-columns:repeat(8,1fr);gap:6px;margin:0;padding:0;list-style:none}
+.path::before{content:'';position:absolute;left:6%;right:6%;top:19px;height:2px;border-radius:2px;opacity:.45;
+  background:linear-gradient(90deg,var(--c-pw),var(--c-pm),var(--c-ra),var(--c-sql),var(--c-jm),var(--c-de),var(--c-git),var(--c-ci))}
+.path a{display:flex;flex-direction:column;align-items:center;gap:6px;text-decoration:none;text-align:center;border-radius:var(--r-sm)}
+.path .dot{position:relative;z-index:1;   /* above the connecting line, never under it */
+  display:grid;place-items:center;width:38px;height:38px;border-radius:50%;
+  color:var(--c);background:color-mix(in srgb,var(--c) 12%,var(--panel));border:1px solid color-mix(in srgb,var(--c) 30%,transparent);
+  box-shadow:0 0 0 5px var(--panel);transition:background .2s,color .2s}
+.path .dot svg{width:18px;height:18px}
+.path a:hover .dot{background:var(--c);color:var(--on-c)}
+.path b{display:block;font-size:var(--fs-sm);line-height:1.2}
+.path small{display:block;font-size:var(--fs-xs);color:var(--dim)}
+
+/* ---------- featured: the training site ---------- */
+.section{padding-top:36px}
+.feature{position:relative;display:grid;grid-template-columns:1.4fr 1fr;gap:24px;align-items:center;
+  padding:22px 24px;border-radius:var(--r);color:#e9f2ff;overflow:hidden;
+  background:linear-gradient(135deg,#0d141f 0%,#132a44 58%,#1c5fa8 100%);box-shadow:var(--shadow)}
+.feature::after{content:'';position:absolute;right:-90px;top:-90px;width:260px;height:260px;border-radius:50%;
+  background:radial-gradient(circle,rgba(61,220,151,.22),transparent 65%);pointer-events:none}
+.feature > *{position:relative;z-index:1}
+.fhead{display:flex;align-items:center;gap:10px;margin-bottom:8px;color:#9fd8ff}
+.fhead .ficon{display:grid;place-items:center;width:30px;height:30px;border-radius:var(--r-sm);
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16)}
+.fhead .ficon svg{width:16px;height:16px}
+.feature h2{margin:0;font-size:var(--fs-h2);line-height:1.2;color:#fff}
+.feature p{margin:6px 0 0;font-size:var(--fs-base);color:#c3d3e6;max-width:64ch}
+.feature .row{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin-top:16px}
+.cta{display:inline-flex;align-items:center;gap:7px;padding:8px 15px;border-radius:var(--r-sm);font-weight:700;
+  font-size:var(--fs-base);text-decoration:none;background:#fff;color:#0d141f;transition:box-shadow .18s}
+.cta svg{width:14px;height:14px}
+.cta:hover{box-shadow:0 8px 20px rgba(0,0,0,.3)}
+.feature .url,.feature .by{font-size:var(--fs-sm);color:#9fb6d1}
+.feature .by{display:inline-flex;align-items:center;gap:7px}
+.feature .by .mark{width:22px;height:22px;border-radius:50%;font-size:8.5px;background:linear-gradient(135deg,#1c7ed6,#12b886)}
+.feature .by b{color:#fff}
+.topics{display:flex;flex-wrap:wrap;gap:6px;margin:0;padding:0;list-style:none}
+.topics li{padding:3px 9px;border-radius:6px;font-size:var(--fs-sm);background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.14);color:#dfeaff}
+.topics .big{flex-basis:100%;display:flex;align-items:baseline;gap:8px;padding:0 0 6px;border:0;background:none;color:#9fb6d1}
+.topics .big b{font-size:30px;line-height:1;color:#fff}
+
+/* ---------- playground list ---------- */
+.listhead{display:flex;align-items:flex-end;justify-content:space-between;gap:12px 24px;flex-wrap:wrap}
+.listhead h2{margin:0;font-size:var(--fs-h2);line-height:1.2}
+.listhead p{margin:4px 0 0;font-size:var(--fs-base);color:var(--muted)}
+.tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:14px 0 14px}
+.seg{display:inline-flex;padding:3px;border-radius:var(--r-sm);background:var(--panel2);border:1px solid var(--line)}
+.seg button{padding:5px 13px;border-radius:6px;font-size:var(--fs-sm);font-weight:700;color:var(--muted)}
+.seg button[aria-pressed=true]{background:var(--panel);color:var(--ink);box-shadow:0 1px 3px rgba(13,23,35,.16)}
+.search{position:relative;flex:1;min-width:200px;max-width:340px}
+.search svg{position:absolute;left:11px;top:50%;width:15px;height:15px;transform:translateY(-50%);color:var(--dim);pointer-events:none}
+.search input{width:100%;height:34px;padding:0 36px 0 33px;border-radius:var(--r-sm);border:1px solid var(--line);
+  background:var(--panel);color:var(--ink);font:400 var(--fs-base) var(--font);outline:none}
+.search input::placeholder{color:var(--dim)}
+.search input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(28,126,214,.16)}
+.search kbd{position:absolute;right:9px;top:50%;transform:translateY(-50%);font:700 var(--fs-xs) var(--font);
+  padding:1px 6px;border-radius:5px;border:1px solid var(--line);color:var(--dim);background:var(--soft)}
+.search input:not(:placeholder-shown) + kbd{display:none}
+.count{margin-left:auto;font-size:var(--fs-sm);color:var(--dim)}
+
+/* three cards per row on desktop, two on a tablet, one on a phone */
+.grid{display:grid;grid-template-columns:1fr;gap:14px;margin:0;padding:0;list-style:none}
+@media (min-width:640px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1000px){.grid{grid-template-columns:repeat(3,1fr)}}
+
+/* the card: the icon sits beside the label, title and link; the description,
+   tags and footer run the full width underneath, which keeps the card short */
+.card{position:relative;display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto auto auto 1fr auto;
+  column-gap:12px;align-items:start;padding:16px 18px 14px;
+  background:var(--panel);border:1px solid var(--line);border-top:3px solid var(--c);border-radius:var(--r);
+  box-shadow:var(--shadow-soft);transition:box-shadow .2s ease,border-color .2s ease,transform .2s ease}
+.cmain{display:contents}
+.card .icon{grid-column:1;grid-row:1 / 4;align-self:center}
+.cmeta,.card h3,.domain{grid-column:2}
+.desc,.chips,.cfoot{grid-column:1 / -1}
+.card:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--c) 45%,var(--line));border-top-color:var(--c)}
+.card:focus-within{outline:2px solid var(--c);outline-offset:2px}
+.card[hidden]{display:none}
+.icon{display:grid;place-items:center;width:44px;height:44px;border-radius:10px;color:var(--c);
+  background:color-mix(in srgb,var(--c) 11%,var(--panel));border:1px solid color-mix(in srgb,var(--c) 22%,transparent);
+  transition:background .2s,color .2s}
+.icon svg{width:22px;height:22px}
+.card:hover .icon{background:var(--c);color:var(--on-c);border-color:transparent}
+.cmeta{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.cat{color:var(--c)}
+.num{font-size:var(--fs-xs);font-weight:700;color:var(--dim);letter-spacing:.04em;text-transform:uppercase}
+.card h3{margin:2px 0 0;font-size:var(--fs-h3);line-height:1.25}
+.card h3 a{color:var(--ink);text-decoration:none;outline:none}
+.card h3 a::after{content:'';position:absolute;inset:0;z-index:2;border-radius:var(--r)}   /* the whole card is the link */
+.domain{font-size:var(--fs-sm);color:var(--dim)}
+.desc{margin:10px 0 0;font-size:var(--fs-base);line-height:1.5;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;align-content:flex-start;gap:5px;margin:9px 0 0;padding:0;list-style:none}
+.chips li{padding:2px 8px;border-radius:6px;font-size:var(--fs-sm);line-height:1.5;
+  background:var(--panel2);color:var(--ink-soft);border:1px solid var(--line)}
+.cfoot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;padding-top:10px;
+  border-top:1px solid var(--line)}
+.dev{display:flex;align-items:center;gap:7px;font-size:var(--fs-sm);color:var(--dim)}
+.dev .mark{width:22px;height:22px;border-radius:50%;font-size:8.5px}
+.dev b{color:var(--ink)}
+.go{flex:none;display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:6px;border:1px solid transparent;
+  font-size:var(--fs-sm);font-weight:700;color:var(--c);background:color-mix(in srgb,var(--c) 11%,transparent);
+  transition:background .2s,color .2s}
+.go svg{width:13px;height:13px}
+.card:hover .go{background:var(--c);color:var(--on-c)}
+.empty{margin:4px 0 0;padding:26px 20px;text-align:center;border:1px dashed var(--line-h);border-radius:var(--r);color:var(--muted)}
+.empty button{margin-left:6px;color:var(--accent);font-weight:700;text-decoration:underline}
+
+/* ---------- how it works ---------- */
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:0;padding:0;list-style:none}
+.how li{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;padding:14px 16px;border-radius:var(--r);
+  background:var(--panel);border:1px solid var(--line)}
+.how .hic{display:grid;place-items:center;width:32px;height:32px;border-radius:var(--r-sm);
+  background:color-mix(in srgb,var(--accent) 11%,var(--panel));color:var(--accent)}
+.how .hic svg{width:16px;height:16px}
+.how h3{margin:0 0 2px;font-size:var(--fs-md);line-height:1.3}
+.how p{margin:0;font-size:var(--fs-sm);color:var(--muted)}
+.how a{color:var(--accent);font-weight:700}
+
+/* ---------- footer ---------- */
+footer{margin-top:48px;border-top:1px solid var(--line);background:var(--bar)}
+.foot{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding-top:20px;padding-bottom:20px}
+.foot nav{display:flex;flex-wrap:wrap;gap:6px}
+.foot nav a{font-size:var(--fs-sm);text-decoration:none;color:var(--muted);padding:5px 12px;
+  border-radius:var(--r-sm);border:1px solid var(--line);background:var(--panel)}
+.foot nav a:hover{color:var(--ink);border-color:var(--line-h)}
+.legal{flex-basis:100%;margin:0;padding-top:12px;border-top:1px dashed var(--line);font-size:var(--fs-sm);color:var(--dim)}
+.legal b{color:var(--muted)}
+
+/* ---------- small screens ---------- */
+@media (max-width:860px){
+  .feature{grid-template-columns:1fr}
+  .how{grid-template-columns:1fr}
+  .topnav{display:none}
+  #theme{margin-left:auto}
+}
+@media (max-width:640px){
+  .wrap{padding-left:16px;padding-right:16px}
+  .hero{padding-top:30px}
+  .path{grid-template-columns:repeat(4,1fr);row-gap:14px}
+  .path::before{display:none}
+  .feature{padding:20px 16px}
+  .card{padding:14px 14px 12px}
+  .card .icon{width:38px;height:38px}
+  .card .icon svg{width:19px;height:19px}
+  .count{margin-left:0;flex-basis:100%}
+  .search{max-width:none;flex-basis:100%}
+  .brand small{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- one line icon per tool, drawn once and reused -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-playwright" viewBox="0 0 24 24"><rect x="2.5" y="4" width="19" height="15.5" rx="2.5"/><path d="M2.5 8.5h19"/><path d="M10.5 11.5l7 2.6-3 1.15-1.15 3z"/></symbol>
+  <symbol id="i-postman" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></symbol>
+  <symbol id="i-restassured" viewBox="0 0 24 24"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1"/><path d="M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1"/><path d="m9 12 2.2 2.2L15.2 10"/></symbol>
+  <symbol id="i-sql" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></symbol>
+  <symbol id="i-jmeter" viewBox="0 0 24 24"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></symbol>
+  <symbol id="i-deepeval" viewBox="0 0 24 24"><path d="M11 3.5l1.9 5.4 5.4 1.9-5.4 1.9L11 18.1l-1.9-5.4-5.4-1.9 5.4-1.9z"/><path d="M19 15v5M16.5 17.5h5"/></symbol>
+  <symbol id="i-git" viewBox="0 0 24 24"><path d="M6 3v12"/><circle cx="18" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M18 9a9 9 0 0 1-9 9"/></symbol>
+  <symbol id="i-cicd" viewBox="0 0 24 24"><path d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.33-6 4Z"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></symbol>
+  <symbol id="i-screen" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M7 9l3 3-3 3M13 15h4"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+</svg>
+
+<header class="top">
+  <div class="wrap bar">
+    <a class="brand" href="#top" aria-label="Compiler Hub, home">
+      <i class="mark" aria-hidden="true">HS</i>
+      <span><b>Compiler Hub</b><small>Developed by Hussain S I</small></span>
+    </a>
+    <nav class="topnav" aria-label="Sections">
+      <a href="#playgrounds">Playgrounds</a>
+      <a href="#training">Training site</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="btn" id="theme" type="button" aria-pressed="false">Dark mode</button>
+  </div>
+</header>
+
+<main id="top">
+  <section class="wrap hero" aria-labelledby="hero-title">
+    <p class="eyebrow label">Hands-on automation playgrounds</p>
+    <h1 id="hero-title">Every compiler, <em>in one place.</em></h1>
+    <p class="lede">Eight browser-based playgrounds for practising test automation, covering UI automation, API testing,
+      databases, performance, AI evaluation, version control and CI/CD, plus a training site that explains the theory.
+      Nothing to install: each playground simulates its tool in the page, so you can write real code and see the
+      result straight away.</p>
+    <div class="heroline">
+      <div class="author"><i class="mark" aria-hidden="true">HS</i>
+        <span>Designed &amp; developed by <b>Hussain S I</b> &middot; SDET</span></div>
+      <ul class="stats">
+        <li><b>8</b>playgrounds</li>
+        <li><b>345</b>training modules</li>
+        <li><b>0</b>installs needed</li>
+      </ul>
+    </div>
+
+    <nav class="pathbox" aria-labelledby="path-title">
+      <h2 id="path-title" class="label">Suggested learning path</h2>
+      <ol class="path">
+        <li><a href="#pg-playwright" data-tool="playwright"><span class="dot"><svg class="ico" aria-hidden="true"><use href="#i-playwright"/></svg></span><span><b>Playwright</b><small>Step 1</small></span></a></li>
+        <li><a href="#pg-postman" data-tool="postman"><span class="dot"><svg class="ico" aria-hidden="true"><use href="#i-postman"/></svg></span><span><b>Postman</b><small>Step 2</small></span></a></li>
+        <li><a href="#pg-restassured" data-tool="restassured"><span class="dot"><svg class="ico" aria-hidden="true"><use href="#i-restassured"/></svg></span><span><b>REST Assured</b><small>Step 3</small></span></a></li>
+        <li><a href="#pg-sql" data-tool="sql"><span class="dot"><svg class="ico" aria-hidden="true"><use href="#i-sql"/></svg></span><span><b>SQL</b><small>Step 4</small></span></a></li>
+        <li><a href="#pg-jmeter" data-tool="jmeter"><span class="dot"><svg class="ico" aria-hidden="true"><use href="#i-jmeter"/></svg></span><span><b>JMeter</b><small>Step 5</small></span></a></li>
+        <li><a href="#pg-deepeval" data-tool="deepeval"><span class="dot"><svg class="ico" aria-hidden="true"><use href="#i-deepeval"/></svg></span><span><b>DeepEval</b><small>Step 6</small></span></a></li>
+        <li><a href="#pg-git" data-tool="git"><span class="dot"><svg class="ico" aria-hidden="true"><use href="#i-git"/></svg></span><span><b>Git</b><small>Step 7</small></span></a></li>
+        <li><a href="#pg-cicd" data-tool="cicd"><span class="dot"><svg class="ico" aria-hidden="true"><use href="#i-cicd"/></svg></span><span><b>CI/CD</b><small>Step 8</small></span></a></li>
+      </ol>
+    </nav>
+  </section>
+
+  <!-- the training site: the theory behind every playground -->
+  <section class="wrap section" id="training" aria-labelledby="training-title">
+    <div class="feature">
+      <div>
+        <div class="fhead"><span class="ficon"><svg class="ico" aria-hidden="true"><use href="#i-book"/></svg></span>
+          <span class="label">Start here &middot; Training site</span></div>
+        <h2 id="training-title">Automation Theory Map</h2>
+        <p>A guided map of 345 modules across Playwright UI and API, TypeScript, Core Java, Selenium with Java,
+          REST Assured, SQL, Git, Python and AI evaluation with DeepEval. Each module has simple explanations,
+          sample code, interview Q&amp;A and edge cases. Read the theory there, then practise it in the playgrounds below.</p>
+        <div class="row">
+          <a class="cta" href="https://hussain-automation.vercel.app/" target="_blank" rel="noopener">
+            Open the training site <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg><span class="sr"> (opens in a new tab)</span></a>
+          <span class="url">hussain-automation.vercel.app</span>
+          <span class="by"><i class="mark" aria-hidden="true">HS</i>Developed by <b>Hussain S I</b></span>
+        </div>
+      </div>
+      <ul class="topics" aria-label="Topics covered">
+        <li class="big"><b>345</b>modules of theory, code and interview Q&amp;A</li>
+        <li>Playwright</li><li>TypeScript</li><li>Core Java</li><li>Selenium</li>
+        <li>REST Assured</li><li>SQL</li><li>Git</li><li>Python</li><li>DeepEval</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- the playgrounds -->
+  <section class="wrap section" id="playgrounds" aria-labelledby="pg-title">
+    <div class="listhead">
+      <div>
+        <h2 id="pg-title">The playgrounds</h2>
+        <p id="sortnote">In learning-path order: UI automation first, then API testing, SQL, JMeter and DeepEval, then Git and CI/CD.</p>
+      </div>
+    </div>
+
+    <div class="tools">
+      <div class="seg" role="group" aria-label="Sort the playgrounds">
+        <button type="button" data-sort="path" aria-pressed="true">Learning path</button>
+        <button type="button" data-sort="az" aria-pressed="false">A&ndash;Z</button>
+      </div>
+      <label class="search">
+        <span class="sr">Search the playgrounds</span>
+        <svg class="ico" aria-hidden="true"><use href="#i-search"/></svg>
+        <input type="search" id="q" placeholder="Search, e.g. API, Java, load test" autocomplete="off" spellcheck="false">
+        <kbd aria-hidden="true">/</kbd>
+      </label>
+      <span class="count" id="count" aria-live="polite">8 playgrounds</span>
+    </div>
+
+    <ol class="grid" id="grid">
+      <li class="card" id="pg-playwright" data-tool="playwright" data-name="Playwright" data-path="1"
+          data-find="playwright ui automation browser typescript javascript locators recorder trace e2e lessons">
+        <span class="icon" aria-hidden="true"><svg class="ico"><use href="#i-playwright"/></svg></span>
+        <div class="cmain">
+          <div class="cmeta"><span class="cat label">UI automation</span><span class="num">Step 01</span></div>
+          <h3><a href="https://playwright-compiler.vercel.app/" target="_blank" rel="noopener">Playwright Playground<span class="sr"> (opens in a new tab)</span></a></h3>
+          <span class="domain">playwright-compiler.vercel.app</span>
+          <p class="desc">Write Playwright tests against a simulated browser and retail store, with a locator picker,
+            a recorder and a trace viewer, across 36 lessons.</p>
+          <ul class="chips"><li>Locators</li><li>Recorder</li><li>Trace viewer</li><li>36 lessons</li></ul>
+          <div class="cfoot">
+            <span class="dev"><i class="mark" aria-hidden="true">HS</i>Developed by <b>Hussain S I</b></span>
+            <span class="go" aria-hidden="true">Open <svg class="ico"><use href="#i-arrow"/></svg></span>
+          </div>
+        </div>
+      </li>
+
+      <li class="card" id="pg-postman" data-tool="postman" data-name="Postman" data-path="2"
+          data-find="postman api testing http request collections environments test scripts newman rest">
+        <span class="icon" aria-hidden="true"><svg class="ico"><use href="#i-postman"/></svg></span>
+        <div class="cmain">
+          <div class="cmeta"><span class="cat label">API testing</span><span class="num">Step 02</span></div>
+          <h3><a href="https://postman-compiler.vercel.app/" target="_blank" rel="noopener">Postman Playground<span class="sr"> (opens in a new tab)</span></a></h3>
+          <span class="domain">postman-compiler.vercel.app</span>
+          <p class="desc">Build and send HTTP requests with collections, environments and test scripts, then export
+            the run for Newman.</p>
+          <ul class="chips"><li>Collections</li><li>Environments</li><li>Test scripts</li><li>Newman</li></ul>
+          <div class="cfoot">
+            <span class="dev"><i class="mark" aria-hidden="true">HS</i>Developed by <b>Hussain S I</b></span>
+            <span class="go" aria-hidden="true">Open <svg class="ico"><use href="#i-arrow"/></svg></span>
+          </div>
+        </div>
+      </li>
+
+      <li class="card" id="pg-restassured" data-tool="restassured" data-name="REST Assured" data-path="3"
+          data-find="rest assured api automation java testng http json northwind traffic">
+        <span class="icon" aria-hidden="true"><svg class="ico"><use href="#i-restassured"/></svg></span>
+        <div class="cmain">
+          <div class="cmeta"><span class="cat label">API automation</span><span class="num">Step 03</span></div>
+          <h3><a href="https://rest-assured-compiler.vercel.app/" target="_blank" rel="noopener">REST Assured Playground<span class="sr"> (opens in a new tab)</span></a></h3>
+          <span class="domain">rest-assured-compiler.vercel.app</span>
+          <p class="desc">Write Java and TestNG REST Assured tests against the simulated Northwind API, then inspect
+            every request and response they sent.</p>
+          <ul class="chips"><li>Java</li><li>TestNG</li><li>Given / When / Then</li><li>API traffic</li></ul>
+          <div class="cfoot">
+            <span class="dev"><i class="mark" aria-hidden="true">HS</i>Developed by <b>Hussain S I</b></span>
+            <span class="go" aria-hidden="true">Open <svg class="ico"><use href="#i-arrow"/></svg></span>
+          </div>
+        </div>
+      </li>
+
+      <li class="card" id="pg-sql" data-tool="sql" data-name="SQL" data-path="4"
+          data-find="sql database mysql query etl testing schema er diagram joins data">
+        <span class="icon" aria-hidden="true"><svg class="ico"><use href="#i-sql"/></svg></span>
+        <div class="cmain">
+          <div class="cmeta"><span class="cat label">Database testing</span><span class="num">Step 04</span></div>
+          <h3><a href="https://sql-compiler-seven.vercel.app/" target="_blank" rel="noopener">SQL Playground<span class="sr"> (opens in a new tab)</span></a></h3>
+          <span class="domain">sql-compiler-seven.vercel.app</span>
+          <p class="desc">Write and run SQL against a simulated MySQL 8.0 database built for ETL testing, with schema
+            and ER-diagram views to show how the tables connect.</p>
+          <ul class="chips"><li>MySQL 8.0</li><li>ETL testing</li><li>Schema</li><li>ER diagram</li></ul>
+          <div class="cfoot">
+            <span class="dev"><i class="mark" aria-hidden="true">HS</i>Developed by <b>Hussain S I</b></span>
+            <span class="go" aria-hidden="true">Open <svg class="ico"><use href="#i-arrow"/></svg></span>
+          </div>
+        </div>
+      </li>
+
+      <li class="card" id="pg-jmeter" data-tool="jmeter" data-name="JMeter" data-path="5"
+          data-find="jmeter performance load test plan virtual users thread group metrics jmx">
+        <span class="icon" aria-hidden="true"><svg class="ico"><use href="#i-jmeter"/></svg></span>
+        <div class="cmain">
+          <div class="cmeta"><span class="cat label">Performance testing</span><span class="num">Step 05</span></div>
+          <h3><a href="https://jmeter-compiler.vercel.app/" target="_blank" rel="noopener">JMeter Playground<span class="sr"> (opens in a new tab)</span></a></h3>
+          <span class="domain">jmeter-compiler.vercel.app</span>
+          <p class="desc">Build a test plan and run a simulated load test with virtual users, read the live metrics
+            and results, then export the plan as a .jmx file.</p>
+          <ul class="chips"><li>Test plans</li><li>Virtual users</li><li>Live metrics</li><li>.jmx export</li></ul>
+          <div class="cfoot">
+            <span class="dev"><i class="mark" aria-hidden="true">HS</i>Developed by <b>Hussain S I</b></span>
+            <span class="go" aria-hidden="true">Open <svg class="ico"><use href="#i-arrow"/></svg></span>
+          </div>
+        </div>
+      </li>
+
+      <li class="card" id="pg-deepeval" data-tool="deepeval" data-name="DeepEval" data-path="6"
+          data-find="deepeval ai testing llm evaluation python pytest metrics faithfulness answer relevancy geval rag chatbot lessons">
+        <span class="icon" aria-hidden="true"><svg class="ico"><use href="#i-deepeval"/></svg></span>
+        <div class="cmain">
+          <div class="cmeta"><span class="cat label">AI testing</span><span class="num">Step 06</span></div>
+          <h3><a href="https://deepeval-compiler.vercel.app/" target="_blank" rel="noopener">DeepEval Playground<span class="sr"> (opens in a new tab)</span></a></h3>
+          <span class="domain">deepeval-compiler.vercel.app</span>
+          <p class="desc">Write Python evaluation tests for a simulated LLM support assistant, graded by a simulated
+            judge model, with every retrieval, answer, verdict and score shown.</p>
+          <ul class="chips"><li>Python</li><li>LLM metrics</li><li>RAG evaluation</li><li>37 lessons</li></ul>
+          <div class="cfoot">
+            <span class="dev"><i class="mark" aria-hidden="true">HS</i>Developed by <b>Hussain S I</b></span>
+            <span class="go" aria-hidden="true">Open <svg class="ico"><use href="#i-arrow"/></svg></span>
+          </div>
+        </div>
+      </li>
+
+      <li class="card" id="pg-git" data-tool="git" data-name="Git" data-path="7"
+          data-find="git version control terminal commit graph branch merge remote staging lessons">
+        <span class="icon" aria-hidden="true"><svg class="ico"><use href="#i-git"/></svg></span>
+        <div class="cmain">
+          <div class="cmeta"><span class="cat label">Version control</span><span class="num">Step 07</span></div>
+          <h3><a href="https://git-compiler.vercel.app/" target="_blank" rel="noopener">Git Playground<span class="sr"> (opens in a new tab)</span></a></h3>
+          <span class="domain">git-compiler.vercel.app</span>
+          <p class="desc">Run git commands in a simulated terminal and watch the working directory, staging area,
+            local repository and remote change, with a live commit graph.</p>
+          <ul class="chips"><li>Terminal</li><li>Commit graph</li><li>Branches</li><li>Remotes</li></ul>
+          <div class="cfoot">
+            <span class="dev"><i class="mark" aria-hidden="true">HS</i>Developed by <b>Hussain S I</b></span>
+            <span class="go" aria-hidden="true">Open <svg class="ico"><use href="#i-arrow"/></svg></span>
+          </div>
+        </div>
+      </li>
+
+      <li class="card" id="pg-cicd" data-tool="cicd" data-name="CI/CD" data-path="8"
+          data-find="ci cd cicd devops jenkins jenkinsfile azure devops pipeline build logs">
+        <span class="icon" aria-hidden="true"><svg class="ico"><use href="#i-cicd"/></svg></span>
+        <div class="cmain">
+          <div class="cmeta"><span class="cat label">DevOps</span><span class="num">Step 08</span></div>
+          <h3><a href="https://cicd-compiler.vercel.app/" target="_blank" rel="noopener">CI/CD Playground<span class="sr"> (opens in a new tab)</span></a></h3>
+          <span class="domain">cicd-compiler.vercel.app</span>
+          <p class="desc">Write a Jenkinsfile and trigger builds in simulated Jenkins and Azure DevOps, then follow the
+            pipeline stage by stage through its logs.</p>
+          <ul class="chips"><li>Jenkins</li><li>Azure DevOps</li><li>Pipelines</li><li>Build logs</li></ul>
+          <div class="cfoot">
+            <span class="dev"><i class="mark" aria-hidden="true">HS</i>Developed by <b>Hussain S I</b></span>
+            <span class="go" aria-hidden="true">Open <svg class="ico"><use href="#i-arrow"/></svg></span>
+          </div>
+        </div>
+      </li>
+    </ol>
+    <p class="empty" id="empty" hidden>No playground matches &ldquo;<span id="emptyq"></span>&rdquo;.<button type="button" id="clearq">Clear the search</button></p>
+  </section>
+
+  <!-- how the playgrounds work -->
+  <section class="wrap section" aria-label="How the playgrounds work">
+    <ul class="how">
+      <li><span class="hic" aria-hidden="true"><svg class="ico"><use href="#i-screen"/></svg></span>
+        <div><h3>Runs in your browser</h3>
+        <p>Each tool is simulated inside the page, so there is nothing to install and no server or account to set up.</p></div></li>
+      <li><span class="hic" aria-hidden="true"><svg class="ico"><use href="#i-check"/></svg></span>
+        <div><h3>Practice, not just reading</h3>
+        <p>You write real test code and commands, run them, and see right away whether they work.</p></div></li>
+      <li><span class="hic" aria-hidden="true"><svg class="ico"><use href="#i-lock"/></svg></span>
+        <div><h3>A quick sign-in for each playground</h3>
+        <p>Each playground opens with its own short sign-in. If you can't get in,
+          <a href="#contact">contact Hussain S I</a>.</p></div></li>
+    </ul>
+  </section>
+</main>
+
+<footer id="contact">
+  <div class="wrap foot">
+    <div class="brand"><i class="mark" aria-hidden="true">HS</i>
+      <span><b>Compiler Hub</b><small style="white-space:normal">Designed &amp; developed by Hussain S I</small></span></div>
+    <nav aria-label="Contact Hussain S I">
+      <a href="https://www.linkedin.com/in/hussain-s-i/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="mailto:hussain.psum@gmail.com">hussain.psum@gmail.com</a>
+      <a href="https://hussain-automation.vercel.app/" target="_blank" rel="noopener">Training site</a>
+    </nav>
+    <p class="legal">&copy; <span id="yr">2026</span> <b>Hussain S I</b>. The Compiler Hub, the training site and every playground
+      listed here are designed and developed by Hussain S I.</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  var $ = function (id) { return document.getElementById(id); };
+  var grid = $('grid'), q = $('q'), count = $('count'), empty = $('empty');
+  var cards = [].slice.call(grid.querySelectorAll('.card'));
+  var SORT_KEY = 'hub-sort', THEME_KEY = 'hub-theme';
+
+  /* a card's step is its place in the learning path, whichever way the list is sorted */
+  var byName = cards.slice().sort(function (a, b) {
+    return a.dataset.name.localeCompare(b.dataset.name, 'en', {sensitivity: 'base'});
+  });
+  var byPath = cards.slice().sort(function (a, b) { return a.dataset.path - b.dataset.path; });
+
+  var NOTES = {
+    path: 'In learning-path order: UI automation first, then API testing, SQL, JMeter and DeepEval, then Git and CI/CD.',
+    az: 'In alphabetical order, A to Z. Each card still shows its step in the learning path.'
+  };
+
+  function applySort(mode, remember) {
+    var sort = mode === 'az' ? 'az' : 'path';
+    (sort === 'az' ? byName : byPath).forEach(function (c) { grid.appendChild(c); });
+    document.querySelectorAll('.seg [data-sort]').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.dataset.sort === sort));
+    });
+    $('sortnote').textContent = NOTES[sort];
+    if (remember) { try { localStorage.setItem(SORT_KEY, sort); } catch (e) {} }
+  }
+
+  function applySearch() {
+    var terms = q.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    var shown = 0;
+    cards.forEach(function (c) {
+      var hay = (c.dataset.name + ' ' + c.dataset.find + ' ' + c.textContent).toLowerCase();
+      var hit = terms.every(function (t) { return hay.indexOf(t) > -1; });
+      c.hidden = !hit;
+      if (hit) shown++;
+    });
+    count.textContent = terms.length ? shown + ' of ' + cards.length + ' playgrounds' : cards.length + ' playgrounds';
+    empty.hidden = shown > 0;
+    $('emptyq').textContent = q.value.trim();
+  }
+
+  document.querySelectorAll('.seg [data-sort]').forEach(function (b) {
+    b.addEventListener('click', function () { applySort(b.dataset.sort, true); });
+  });
+  q.addEventListener('input', applySearch);
+  q.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { q.value = ''; applySearch(); }
+  });
+  $('clearq').addEventListener('click', function () { q.value = ''; applySearch(); q.focus(); });
+  /* "/" jumps to the search box, the way most sites do */
+  document.addEventListener('keydown', function (e) {
+    var t = e.target, typing = t && (/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName) || t.isContentEditable);
+    if (e.key === '/' && !typing && !e.ctrlKey && !e.metaKey && !e.altKey) { e.preventDefault(); q.focus(); }
+  });
+
+  /* light by default; a choice of dark is remembered */
+  var themeBtn = $('theme');
+  function setTheme(t) {
+    var dark = t === 'dark';
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    themeBtn.textContent = dark ? 'Light mode' : 'Dark mode';
+    themeBtn.setAttribute('aria-pressed', String(dark));
+    var meta = document.querySelector('meta[name=theme-color]');
+    if (meta) meta.setAttribute('content', dark ? '#0e131a' : '#f6f4ef');
+  }
+  themeBtn.addEventListener('click', function () {
+    var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+    try { localStorage.setItem(THEME_KEY, next); } catch (e) {}
+  });
+
+  var stored = null;
+  try { stored = localStorage.getItem(SORT_KEY); } catch (e) {}
+  setTheme(document.documentElement.getAttribute('data-theme'));
+  applySort(stored || 'path', false);
+  applySearch();
+  $('yr').textContent = new Date().getFullYear();
+})();
+</script>
+</body>
+</html>
